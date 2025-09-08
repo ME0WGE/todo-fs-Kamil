@@ -9,7 +9,7 @@ export default function Home({ tasks }) {
         is_completed: false,
     });
 
-    const handleSubmit = e => {
+    function handleSubmit (e) {
         e.preventDefault();
         post('/tasks');
     };
@@ -36,7 +36,7 @@ export default function Home({ tasks }) {
                                 type="text"
                                 placeholder="Titre de la tâche..."
                                 value={data.title}
-                                onChange={e => setData({ title: e.target.value })}
+                                onChange={e => setData('title', e.target.value)}
                             />
                         </div>
                         <button>Ajouter la tâche</button>

@@ -12,10 +12,4 @@ class HomeController extends Controller
         $tasks = Task::all();
         return Inertia::render('home/Index', compact('tasks'));
     }
-    public function create() {}
-    public function store() {}
-    public function show() {}
-    public function edit() {}
-    public function update() {}
-    public function destroy() {}
 }
