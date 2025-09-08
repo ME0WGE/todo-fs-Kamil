@@ -29,5 +29,9 @@ class TaskController extends Controller
     public function show() {}
     public function edit() {}
     public function update() {}
-    public function destroy() {}
+    public function destroy($id) {
+        $task = Task::findOrFail($id);
+        $task->delete();
+        return;
+    }
 }

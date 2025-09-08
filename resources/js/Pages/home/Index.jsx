@@ -4,15 +4,27 @@ import { useState } from 'react';
 export default function Home({ tasks }) {
     const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
 
-    const { data, setData, post, processing, errors } = useForm({
+    const {
+        data,
+        setData,
+        post,
+        delete: destroy,
+        processing,
+        errors,
+    } = useForm({
         title: '',
         is_completed: false,
     });
 
-    function handleSubmit (e) {
+    function handleSubmit(e) {
         e.preventDefault();
         post('/tasks');
-    };
+    }
+
+    function handleDelete(id) {
+        // e.preventDefault();
+        destroy(`/tasks/${id}`);
+    }
 
     // Filter tasks
     const filteredTasks = tasks.filter(task => {
@@ -101,7 +113,10 @@ export default function Home({ tasks }) {
                                             <button className="cursor-pointer border-1 border-orange-400 rounded">
                                                 ✏️
                                             </button>
-                                            <button className="cursor-pointer border-1 border-red-400 rounded">
+                                            <button
+                                                className="cursor-pointer border-1 border-red-400 rounded"
+                                                onClick={() => handleDelete(task.id)}
+                                            >
                                                 🗑️
                                             </button>
                                         </div>
