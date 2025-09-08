@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <>
-            <footer>Made by Kamil Baldyga</footer>
+            <footer className="flex justify-center">Made by Kamil Baldyga</footer>
         </>
     );
 }

@@ -16,9 +16,16 @@ class TaskSeeder extends Seeder
         Task::insert([
             [
                 'title' => 'task1',
-                'description' => 'descr1',
                 'is_completed' => false,
-            ]
+            ],
+            [
+                'title' => 'task2',
+                'is_completed' => false,
+            ],
+            [
+                'title' => 'task3',
+                'is_completed' => false,
+            ],
         ]);
     }
 }
