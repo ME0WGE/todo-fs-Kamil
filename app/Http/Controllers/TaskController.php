@@ -27,8 +27,21 @@ class TaskController extends Controller
         return Inertia::location(route('home'));
     }
     public function show() {}
-    public function edit() {}
-    public function update() {}
+    public function edit($id) {
+        $task = Task::findOrFail($id);
+        return Inertia::render('tasks/Edit', compact('task'));
+    }
+    public function update($request, $id) {
+        $task = Task::findOrFail($id);
+
+        $request->validate([
+            'title' => "required|string",
+        ]);
+
+        $task->title = $request->title;
+        $task->update();
+        return;
+    }
     public function destroy($id) {
         $task = Task::findOrFail($id);
         $task->delete();

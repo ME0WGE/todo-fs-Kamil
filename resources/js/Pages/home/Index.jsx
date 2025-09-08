@@ -3,12 +3,14 @@ import { useState } from 'react';
 
 export default function Home({ tasks }) {
     const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
+    const [editMode, setEditMode] = useState(false);
 
     const {
         data,
         setData,
         post,
         delete: destroy,
+        update,
         processing,
         errors,
     } = useForm({
@@ -22,8 +24,11 @@ export default function Home({ tasks }) {
     }
 
     function handleDelete(id) {
-        // e.preventDefault();
         destroy(`/tasks/${id}`);
+    }
+
+    function handleEdit(id) {
+        update(`/tasks/${id}`);
     }
 
     // Filter tasks
@@ -40,20 +45,19 @@ export default function Home({ tasks }) {
         <>
             <div>
                 {/* Add task form */}
-                <div>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label>Nouvelle tâche</label>
-                            <input
-                                type="text"
-                                placeholder="Titre de la tâche..."
-                                value={data.title}
-                                onChange={e => setData('title', e.target.value)}
-                            />
-                        </div>
-                        <button>Ajouter la tâche</button>
-                    </form>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Nouvelle tâche</label>
+                        <input
+                            type="text"
+                            placeholder="Titre de la tâche..."
+                            name="title"
+                            value={data.title}
+                            onChange={e => setData('title', e.target.value)}
+                        />
+                    </div>
+                    <button>Ajouter la tâche</button>
+                </form>
 
                 {/* Filter tasks */}
                 <div>
@@ -85,10 +89,10 @@ export default function Home({ tasks }) {
                             </p>
                             <p>
                                 {filter === 'all'
-                                    ? 'Commencez par ajouter votre première tâche !'
+                                    ? 'Ajoutez votre première tâche !'
                                     : filter === 'active'
                                     ? 'Toutes vos tâches sont terminées !'
-                                    : "Aucune tâche n'a été terminée pour le moment."}
+                                    : "Aucune tâche n'a été terminée."}
                             </p>
                         </div>
                     ) : (
@@ -98,7 +102,7 @@ export default function Home({ tasks }) {
                                     <div className="flex gap-5 mb-5">
                                         {/* Checkbox */}
                                         <button>
-                                            <input type="checkbox" checked={task.is_completed} readOnly />
+                                            <input type="checkbox" />
                                         </button>
 
                                         {/* Task content */}
