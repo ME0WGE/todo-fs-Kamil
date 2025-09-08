@@ -15,3 +15,12 @@ Mettez des commentaires dans votre code !!!!
 Tech: LARAVEL / INERTIA / BOOTSTRAP || TAILWIND
 Deadline: Mercredi 10/09 - 9:00
 "Responsivité"=> Pc & Mobile
+
+---
+
+## Tables
+
+-   Tasks:
+    -   title -> string
+    -   description -> text -> nullable()
+    -   is_completed -> boolean -> default(false)
