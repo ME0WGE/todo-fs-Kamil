@@ -165,17 +165,27 @@ export default function Home({ tasks }) {
                     </div>
 
                     {tasks.length - activeTasksCount > 0 && (
-                        <button
-                            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200"
-                            onClick={() => {
-                                const completedTasks = tasks.filter(task => task.is_completed);
-                                completedTasks.forEach(task => {
-                                    destroy(`/tasks/${task.id}`);
-                                });
-                            }}
-                        >
-                            Effacer les terminées
-                        </button>
+                        <div className="flex gap-2">
+                            {/* <button
+                                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200"
+                                onClick={() => {
+                                    const completedTasks = tasks.filter(task => task.is_completed);
+                                    completedTasks.forEach(task => {
+                                        destroy(`/tasks/${task.id}`);
+                                    });
+                                }}
+                            >
+                                Effacer les terminées (une par une)
+                            </button> */}
+                            <button
+                                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors duration-200"
+                                onClick={() => {
+                                    destroy('/tasks/all');
+                                }}
+                            >
+                                Effacer toutes les tâches terminées
+                            </button>
+                        </div>
                     )}
                 </div>
 

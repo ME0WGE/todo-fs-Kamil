@@ -51,4 +51,8 @@ class TaskController extends Controller
         $task->delete();
         return;
     }
+    public function destroyAll() {
+        Task::where('is_completed', true)->delete();
+        return;
+    }
 }
