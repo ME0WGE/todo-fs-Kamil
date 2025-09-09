@@ -140,8 +140,11 @@ export default function Home({ tasks }) {
                                                     <input
                                                         type="text"
                                                         placeholder="Editer la tâche..."
-                                                        // value={data.title}
-                                                        onChange={e => setData('title', e.target.value)}
+                                                        value={editTitle}
+                                                        onChange={e => {
+                                                            setData('title', e.target.value);
+                                                            setEditTitle(e.target.value);
+                                                        }}
                                                         onKeyDown={e => e.key === 'Enter' && handleEditSave(task.id)}
                                                         autoFocus
                                                     />
