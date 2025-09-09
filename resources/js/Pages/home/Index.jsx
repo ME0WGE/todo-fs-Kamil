@@ -92,206 +92,188 @@ export default function Home({ tasks }) {
 
     return (
         <>
-            <div className="w-full max-w-4xl mx-auto p-4">
-                {/* Add task form */}
-                <form onSubmit={handleSubmit} className="mb-8 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                    <div className="space-y-4">
-                        <label className="block text-sm font-medium">Nouvelle tâche</label>
-                        <input
-                            type="text"
-                            placeholder="Titre de la tâche..."
-                            name="title"
-                            value={newTaskTitle}
-                            onChange={e => {
-                                setData('title', e.target.value);
-                                setNewTaskTitle(e.target.value);
-                            }}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                        <label className="flex items-center space-x-2">
-                            <input
-                                type="checkbox"
-                                checked={newTaskCompleted}
-                                onChange={e => {
-                                    setData('is_completed', e.target.checked);
-                                    setNewTaskCompleted(e.target.checked);
-                                }}
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <span className="text-sm">Tâche terminée</span>
-                        </label>
+            <div className="w-full">
+                <div className="w-full max-w-2xl mx-auto px-4 py-12">
+                    {/* Title */}
+                    <div className="text-center mb-8">
+                        <h1 className="text-5xl md:text-6xl font-light tracking-wide text-rose-200">
+                            Full-Stack Todo List
+                        </h1>
+                        <span className="text-xl md:text-xl font-light tracking-wide text-rose-200">
+                            Yeah, it works.
+                        </span>
                     </div>
-                    <button
-                        type="submit"
-                        className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
-                    >
-                        Ajouter la tâche
-                    </button>
-                </form>
 
-                {/* Filter tasks */}
-                <div className="mb-6">
-                    <div className="flex gap-2 mb-4">
+                    {/* Add task */}
+                    <form onSubmit={handleSubmit} className="mb-6">
+                        <div className="flex gap-3">
+                            <input
+                                type="text"
+                                placeholder="Add a task."
+                                name="title"
+                                value={newTaskTitle}
+                                onChange={e => {
+                                    setData('title', e.target.value);
+                                    setNewTaskTitle(e.target.value);
+                                }}
+                                className="flex-1 px-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 dark:bg-black/40 dark:border-white/10 dark:text-white dark:placeholder-gray-400"
+                            />
+                            <button
+                                type="submit"
+                                className="px-6 py-4 bg-rose-200 hover:bg-rose-300 text-gray-900 rounded-2xl transition-colors cursor-pointer"
+                            >
+                                Add task
+                            </button>
+                        </div>
+                        <div className="mt-3 flex items-center justify-center gap-3 text-sm text-gray-300">
+                            <label className="inline-flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={newTaskCompleted}
+                                    onChange={e => {
+                                        setData('is_completed', e.target.checked);
+                                        setNewTaskCompleted(e.target.checked);
+                                    }}
+                                    className="w-4 h-4 rounded-full accent-rose-400 bg-white border-gray-300 dark:bg-black/40 dark:border-white/20"
+                                />
+                                <span>Mark as completed</span>
+                            </label>
+                        </div>
+                    </form>
+
+                    {/* Timestamp */}
+                    <div className="text-center mb-6">
+                        <p className="text-gray-400">{new Date().toLocaleString('en-US')}</p>
+                    </div>
+
+                    {/* Filters - minimal */}
+                    <div className="mb-6 flex items-center justify-center gap-2 text-sm">
                         <button
-                            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                                filter === 'all'
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                            className={`px-3 py-1.5 rounded-full cursor-pointer ${
+                                filter === 'all' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
                             }`}
                             onClick={() => setFilter('all')}
                         >
-                            Toutes ({tasks.length})
+                            <i className="fas fa-list-ul mr-2"></i>All
                         </button>
                         <button
-                            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                                filter === 'active'
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                            className={`px-3 py-1.5 rounded-full cursor-pointer ${
+                                filter === 'active' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
                             }`}
                             onClick={() => setFilter('active')}
                         >
-                            Actives ({activeTasksCount})
+                            <i className="fas fa-circle-notch mr-2"></i>Active
                         </button>
                         <button
-                            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                                filter === 'completed'
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                            className={`px-3 py-1.5 rounded-full cursor-pointer ${
+                                filter === 'completed' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
                             }`}
                             onClick={() => setFilter('completed')}
                         >
-                            Terminées ({tasks.length - activeTasksCount})
+                            <i className="fas fa-check-circle mr-2"></i>Completed
                         </button>
+                        {tasks.length - activeTasksCount > 0 && (
+                            <button
+                                className="px-3 py-1.5 rounded-full text-gray-400 hover:text-white cursor-pointer"
+                                onClick={() => destroy('/tasks/all')}
+                            >
+                                <i className="fas fa-trash mr-2 "></i>Clear completed
+                            </button>
+                        )}
                     </div>
 
-                    {tasks.length - activeTasksCount > 0 && (
-                        <div className="flex gap-2">
-                            {/* <button
-                                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200"
-                                onClick={() => {
-                                    const completedTasks = tasks.filter(task => task.is_completed);
-                                    completedTasks.forEach(task => {
-                                        destroy(`/tasks/${task.id}`);
-                                    });
-                                }}
-                            >
-                                Effacer les terminées (une par une)
-                            </button> */}
-                            <button
-                                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors duration-200"
-                                onClick={() => {
-                                    destroy('/tasks/all');
-                                }}
-                            >
-                                Effacer toutes les tâches terminées
-                            </button>
-                        </div>
-                    )}
-                </div>
-
-                {/* List tasks */}
-                <div>
-                    {filteredTasks.length === 0 ? (
-                        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                            <p className="text-lg">
-                                {filter === 'all'
-                                    ? 'Aucune tâche'
-                                    : filter === 'active'
-                                    ? 'Aucune tâche active'
-                                    : 'Aucune tâche terminée'}
-                            </p>
-                        </div>
-                    ) : (
-                        <div className="space-y-3">
-                            {filteredTasks.map(task => (
+                    {/* Tasks */}
+                    <div className="space-y-3">
+                        {filteredTasks.length === 0 ? (
+                            <div className="text-center text-gray-500 dark:text-gray-400 py-12">No tasks yet.</div>
+                        ) : (
+                            filteredTasks.map(task => (
                                 <div
                                     key={task.id}
-                                    className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+                                    className="flex items-center justify-between bg-white border border-gray-200 rounded-2xl px-4 py-3 dark:bg-white/5 dark:border-white/10"
                                 >
-                                    <div className="flex items-center gap-4 p-4">
-                                        {/* Checkbox - !editMode */}
+                                    {/* Left: check + title or edit input */}
+                                    <div className="flex items-center gap-3 flex-1">
                                         {editingTaskId !== task.id && (
                                             <input
                                                 type="checkbox"
                                                 checked={task.is_completed}
                                                 onChange={e => handleCheck(e, task)}
-                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                className="w-6 h-6 rounded-full accent-rose-400 bg-white border-gray-300 dark:bg-black/40 dark:border-white/20"
                                             />
                                         )}
 
-                                        {/* Task content - Edit task */}
-                                        <div className="flex-1">
-                                            {editingTaskId === task.id ? (
-                                                <form
-                                                    onSubmit={e => {
-                                                        e.preventDefault();
-                                                        put('tasks.update', task.id);
+                                        {editingTaskId === task.id ? (
+                                            <form
+                                                onSubmit={e => {
+                                                    e.preventDefault();
+                                                    handleEditSave(task.id);
+                                                }}
+                                                className="flex items-center gap-3 w-full"
+                                            >
+                                                <input
+                                                    type="text"
+                                                    placeholder="Edit task..."
+                                                    value={editTitle}
+                                                    onChange={e => {
+                                                        setData('title', e.target.value);
+                                                        setEditTitle(e.target.value);
                                                     }}
-                                                    className="flex gap-3"
-                                                >
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Editer la tâche..."
-                                                        value={editTitle}
-                                                        onChange={e => {
-                                                            setData('title', e.target.value);
-                                                            setEditTitle(e.target.value);
-                                                        }}
-                                                        onKeyDown={e => e.key === 'Enter' && handleEditSave(task.id)}
-                                                        autoFocus
-                                                        className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        className="px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200"
-                                                        onClick={() => handleEditSave(task.id)}
-                                                    >
-                                                        <i className="fas fa-check"></i>
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        className="px-3 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200"
-                                                        onClick={handleEditCancel}
-                                                    >
-                                                        <i className="fas fa-times"></i>
-                                                    </button>
-                                                </form>
-                                            ) : (
-                                                <h3
-                                                    className={`text-lg ${
-                                                        task.is_completed
-                                                            ? 'line-through text-gray-500 dark:text-gray-400'
-                                                            : 'text-gray-900 dark:text-white'
-                                                    }`}
-                                                >
-                                                    {task.title}
-                                                </h3>
-                                            )}
-                                        </div>
-
-                                        {/* Edit / Delete */}
-                                        {editingTaskId !== task.id && (
-                                            <div className="flex gap-2">
+                                                    onKeyDown={e => e.key === 'Enter' && handleEditSave(task.id)}
+                                                    autoFocus
+                                                    className="flex-1 bg-black/30 border border-white/10 rounded-xl px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                                                />
                                                 <button
-                                                    className="px-3 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors duration-200"
-                                                    onClick={() => handleEditStart(task)}
+                                                    type="button"
+                                                    className="w-8 h-8 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center"
+                                                    onClick={() => handleEditSave(task.id)}
                                                 >
-                                                    <i className="fas fa-edit"></i>
+                                                    <i className="fas fa-check text-xs cursor-pointer"></i>
                                                 </button>
-
                                                 <button
-                                                    className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200"
-                                                    onClick={() => handleDelete(task.id)}
+                                                    type="button"
+                                                    className="w-8 h-8 rounded-full bg-gray-600 hover:bg-gray-500 text-white flex items-center justify-center"
+                                                    onClick={handleEditCancel}
                                                 >
-                                                    <i className="fas fa-trash"></i>
+                                                    <i className="fas fa-times text-xs cursor-pointer"></i>
                                                 </button>
+                                            </form>
+                                        ) : (
+                                            <div
+                                                className={`truncate text-gray-900 dark:text-white ${
+                                                    task.is_completed
+                                                        ? 'line-through text-gray-500 dark:text-gray-400'
+                                                        : ''
+                                                }`}
+                                            >
+                                                {task.title}
                                             </div>
                                         )}
                                     </div>
+
+                                    {/* Right: actions */}
+                                    {editingTaskId !== task.id && (
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                aria-label="edit"
+                                                className="w-8 h-8 rounded-full bg-gray-600 hover:bg-gray-500 text-white flex items-center justify-center"
+                                                onClick={() => handleEditStart(task)}
+                                            >
+                                                <i className="fas fa-pen cursor-pointer"></i>
+                                            </button>
+                                            <button
+                                                aria-label="delete"
+                                                className="w-8 h-8 rounded-full bg-gray-600 hover:bg-red-500 text-white flex items-center justify-center"
+                                                onClick={() => handleDelete(task.id)}
+                                            >
+                                                <i className="fas fa-trash cursor-pointer"></i>
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
-                            ))}
-                        </div>
-                    )}
+                            ))
+                        )}
+                    </div>
                 </div>
             </div>
         </>
