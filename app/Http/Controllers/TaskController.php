@@ -21,7 +21,7 @@ class TaskController extends Controller
 
         Task::create([
             'title' => $request->title,
-            'is_completed' => false,
+            'is_completed' => $request->is_completed ?? false,
         ]);
 
         return;

@@ -7,6 +7,7 @@ export default function Home({ tasks }) {
     const [editTitle, setEditTitle] = useState('');
     const [checkboxStates, setCheckboxStates] = useState({});
     const [newTaskTitle, setNewTaskTitle] = useState('');
+    const [newTaskCompleted, setNewTaskCompleted] = useState(false);
 
     const {
         data,
@@ -24,9 +25,11 @@ export default function Home({ tasks }) {
     function handleSubmit(e) {
         e.preventDefault();
         setData('title', newTaskTitle);
+        setData('is_completed', newTaskCompleted);
         post('/tasks', {
             onSuccess: () => {
                 setNewTaskTitle('');
+                setNewTaskCompleted(false);
             },
         });
     }
@@ -85,6 +88,17 @@ export default function Home({ tasks }) {
                                 setNewTaskTitle(e.target.value);
                             }}
                         />
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={newTaskCompleted}
+                                onChange={e => {
+                                    setData('is_completed', e.target.checked);
+                                    setNewTaskCompleted(e.target.checked);
+                                }}
+                            />
+                            Tâche terminée
+                        </label>
                     </div>
                     <button>Ajouter la tâche</button>
                 </form>
