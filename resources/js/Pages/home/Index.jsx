@@ -122,8 +122,11 @@ export default function Home({ tasks }) {
                                         >
                                             <input
                                                 type="checkbox"
-                                                // checked={task.id.is_completed}
-                                                onChange={e => setData('is_completed', e.target.checked)}
+                                                // checked={task.is_completed}
+                                                onChange={e => {
+                                                    setData('title', task.title);
+                                                    setData('is_completed', e.target.checked);
+                                                }}
                                             />
                                         </form>
 
