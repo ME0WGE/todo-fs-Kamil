@@ -3,14 +3,15 @@ import { useState } from 'react';
 
 export default function Home({ tasks }) {
     const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
-    const [editMode, setEditMode] = useState(false);
+    const [editingTaskId, setEditingTaskId] = useState(null);
+    const [editTitle, setEditTitle] = useState('');
 
     const {
         data,
         setData,
         post,
         delete: destroy,
-        update,
+        put,
         processing,
         errors,
     } = useForm({
@@ -27,8 +28,36 @@ export default function Home({ tasks }) {
         destroy(`/tasks/${id}`);
     }
 
-    function handleEdit(id) {
-        update(`/tasks/${id}`);
+    function handleEditStart(task) {
+        setEditingTaskId(task.id);
+        setEditTitle(task.title);
+    }
+
+    function handleEditCancel() {
+        setEditingTaskId(null);
+        setEditTitle('');
+    }
+
+    function handleEditSave(taskId) {
+        if (editTitle.trim()) {
+            put(`/tasks/${taskId}`, {
+                data: {
+                    title: editTitle.trim(),
+                    is_completed: tasks.find(t => t.id === taskId)?.is_completed || false,
+                },
+            });
+            setEditingTaskId(null);
+            setEditTitle('');
+        }
+    }
+
+    function handleToggleComplete(taskId, currentStatus) {
+        put(`/tasks/${taskId}`, {
+            data: {
+                title: tasks.find(t => t.id === taskId)?.title || '',
+                is_completed: !currentStatus,
+            },
+        });
     }
 
     // Filter tasks
@@ -101,29 +130,70 @@ export default function Home({ tasks }) {
                                 <div key={task.id}>
                                     <div className="flex gap-5 mb-5">
                                         {/* Checkbox */}
-                                        <button>
-                                            <input type="checkbox" />
+                                        <button onClick={() => handleToggleComplete(task.id, task.is_completed)}>
+                                            <input type="checkbox" checked={task.is_completed} />
                                         </button>
 
                                         {/* Task content */}
-                                        <div>
-                                            <h3 style={{ textDecoration: task.is_completed ? 'line-through' : 'none' }}>
-                                                {task.title}
-                                            </h3>
+                                        <div className="flex-1">
+                                            {editingTaskId === task.id ? (
+                                                <form
+                                                    onSubmit={e => {
+                                                        e.preventDefault();
+                                                        put(route('tasks.update', task.id));
+                                                    }}
+                                                    className="flex gap-3"
+                                                >
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Editer la tâche..."
+                                                        value={data.title}
+                                                        onChange={e => setData('title',e.target.value)}
+                                                        onKeyDown={e => e.key === 'Enter' && handleEditSave(task.id)}
+                                                        autoFocus
+                                                    />
+                                                    <button
+                                                        className="cursor-pointer border-1 border-green-400 rounded px-2"
+                                                        onClick={() => handleEditSave(task.id)}
+                                                    >
+                                                        ✅
+                                                    </button>
+                                                    <button
+                                                        className="cursor-pointer border-1 border-gray-400 rounded px-2"
+                                                        onClick={handleEditCancel}
+                                                    >
+                                                        ❌
+                                                    </button>
+                                                </form>
+                                            ) : (
+                                                <h3
+                                                    style={{
+                                                        textDecoration: task.is_completed ? 'line-through' : 'none',
+                                                    }}
+                                                >
+                                                    {task.title}
+                                                </h3>
+                                            )}
                                         </div>
 
                                         {/* Modify / Delete */}
-                                        <div className="flex gap-3">
-                                            <button className="cursor-pointer border-1 border-orange-400 rounded">
-                                                ✏️
-                                            </button>
-                                            <button
-                                                className="cursor-pointer border-1 border-red-400 rounded"
-                                                onClick={() => handleDelete(task.id)}
-                                            >
-                                                🗑️
-                                            </button>
-                                        </div>
+                                        {editingTaskId !== task.id && (
+                                            <div className="flex gap-3">
+                                                <button
+                                                    className="cursor-pointer border-1 border-orange-400 rounded px-2"
+                                                    onClick={() => handleEditStart(task)}
+                                                >
+                                                    ✏️
+                                                </button>
+
+                                                <button
+                                                    className="cursor-pointer border-1 border-red-400 rounded px-2"
+                                                    onClick={() => handleDelete(task.id)}
+                                                >
+                                                    🗑️
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             ))}

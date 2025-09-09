@@ -16,30 +16,33 @@ class TaskController extends Controller
     public function store(Request $request) {
         $request->validate([
             'title' => "required|string",
-            'is_completed' => "required|boolean",
         ]);
 
-        $task = new Task();
-        $task->title = $request->title;
-        $task->is_completed = $request->is_completed;
-        $task->save();
+        Task::create([
+            'title' => $request->title,
+            'is_completed' => false,
+        ]);
 
-        return Inertia::location(route('home'));
+        return Inertia::render('home/Index');
     }
     public function show() {}
     public function edit($id) {
         $task = Task::findOrFail($id);
         return Inertia::render('tasks/Edit', compact('task'));
     }
-    public function update($request, $id) {
+    public function update(Request $request, $id) {
         $task = Task::findOrFail($id);
 
         $request->validate([
             'title' => "required|string",
+            'is_completed' => "boolean",
         ]);
 
-        $task->title = $request->title;
-        $task->update();
+        $task->update([
+            'title' => $request->title,
+            'is_completed' => $request->is_completed ?? $task->is_completed,
+        ]);
+
         return;
     }
     public function destroy($id) {
