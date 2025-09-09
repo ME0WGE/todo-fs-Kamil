@@ -5,6 +5,7 @@ export default function Home({ tasks }) {
     const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editTitle, setEditTitle] = useState('');
+    const [checkboxStates, setCheckboxStates] = useState({});
 
     const {
         data,
@@ -122,10 +123,18 @@ export default function Home({ tasks }) {
                                         >
                                             <input
                                                 type="checkbox"
-                                                // checked={task.is_completed}
+                                                checked={
+                                                    checkboxStates[task.id] !== undefined
+                                                        ? checkboxStates[task.id]
+                                                        : task.is_completed
+                                                }
                                                 onChange={e => {
                                                     setData('title', task.title);
                                                     setData('is_completed', e.target.checked);
+                                                    setCheckboxStates(prev => ({
+                                                        ...prev,
+                                                        [task.id]: e.target.checked,
+                                                    }));
                                                 }}
                                             />
                                         </form>
