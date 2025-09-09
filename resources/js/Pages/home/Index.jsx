@@ -109,7 +109,7 @@ export default function Home({ tasks }) {
                         <div className="flex gap-3">
                             <input
                                 type="text"
-                                placeholder="Add a task."
+                                placeholder="Add a task..."
                                 name="title"
                                 value={newTaskTitle}
                                 onChange={e => {
@@ -141,7 +141,7 @@ export default function Home({ tasks }) {
                         </div>
                     </form>
 
-                    {/* Filters - minimal */}
+                    {/* Filters */}
                     <div className="mb-6 flex items-center justify-center gap-2 text-sm">
                         <button
                             className={`px-3 py-1.5 rounded-full cursor-pointer ${
@@ -191,19 +191,10 @@ export default function Home({ tasks }) {
                             filteredTasks.map(task => (
                                 <div
                                     key={task.id}
-                                    className="flex items-center justify-between bg-white border border-gray-400 rounded-2xl px-4 py-3 dark:bg-white/10 dark:border-white/20"
+                                    className="flex items-start justify-between bg-white border border-gray-400 rounded-2xl px-4 py-3 dark:bg-white/10 dark:border-white/20"
                                 >
                                     {/* check + title - edit input */}
-                                    <div className="flex items-center gap-3 flex-1">
-                                        {editingTaskId !== task.id && (
-                                            <input
-                                                type="checkbox"
-                                                checked={task.is_completed}
-                                                onChange={e => handleCheck(e, task)}
-                                                className="w-6 h-6 rounded-full accent-rose-400 bg-white border-gray-500 dark:bg-black/40 dark:border-white/30"
-                                            />
-                                        )}
-
+                                    <div className="flex-1">
                                         {editingTaskId === task.id ? (
                                             <form
                                                 onSubmit={e => {
@@ -240,21 +231,31 @@ export default function Home({ tasks }) {
                                                 </button>
                                             </form>
                                         ) : (
-                                            <p
-                                                className={`truncate text-gray-900 dark:text-white ${
-                                                    task.is_completed
-                                                        ? 'line-through text-gray-700 dark:text-gray-400'
-                                                        : ''
-                                                }`}
-                                            >
-                                                {task.title}
-                                            </p>
+                                            <div className="flex gap-3">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={task.is_completed}
+                                                    onChange={e => handleCheck(e, task)}
+                                                    className="w-6 h-6 rounded-full accent-rose-400 bg-white border-gray-500 dark:bg-black/40 dark:border-white/30 mt-1 flex-shrink-0"
+                                                />
+                                                <div className="flex-1 min-w-0">
+                                                    <p
+                                                        className={`task-title text-gray-900 dark:text-white ${
+                                                            task.is_completed
+                                                                ? 'line-through text-gray-700 dark:text-gray-400'
+                                                                : ''
+                                                        }`}
+                                                    >
+                                                        {task.title}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
 
-                                    {/* Right: actions */}
+                                    {/* edit - delete */}
                                     {editingTaskId !== task.id && (
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-start gap-2 pt-1">
                                             <button
                                                 aria-label="edit"
                                                 className="w-8 h-8 rounded-full bg-gray-600 hover:bg-gray-500 text-white flex items-center justify-center"
