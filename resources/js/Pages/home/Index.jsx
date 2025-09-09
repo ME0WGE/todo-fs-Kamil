@@ -6,6 +6,7 @@ export default function Home({ tasks }) {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editTitle, setEditTitle] = useState('');
     const [checkboxStates, setCheckboxStates] = useState({});
+    const [newTaskTitle, setNewTaskTitle] = useState('');
 
     const {
         data,
@@ -22,7 +23,12 @@ export default function Home({ tasks }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        post('/tasks');
+        setData('title', newTaskTitle);
+        post('/tasks', {
+            onSuccess: () => {
+                setNewTaskTitle('');
+            },
+        });
     }
 
     function handleDelete(id) {
@@ -73,8 +79,11 @@ export default function Home({ tasks }) {
                             type="text"
                             placeholder="Titre de la tâche..."
                             name="title"
-                            // value={data.title}
-                            onChange={e => setData('title', e.target.value)}
+                            value={newTaskTitle}
+                            onChange={e => {
+                                setData('title', e.target.value);
+                                setNewTaskTitle(e.target.value);
+                            }}
                         />
                     </div>
                     <button>Ajouter la tâche</button>
