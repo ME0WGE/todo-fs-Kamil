@@ -1,20 +1,20 @@
-import { useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Home({ tasks }) {
     const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editTitle, setEditTitle] = useState('');
-    const [checkboxStates, setCheckboxStates] = useState({});
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [newTaskCompleted, setNewTaskCompleted] = useState(false);
+    const [checkboxStates, setCheckboxStates] = useState({});
 
     const {
         data,
         setData,
         post,
-        delete: destroy,
         put,
+        delete: destroy,
         processing,
         errors,
     } = useForm({
@@ -32,6 +32,19 @@ export default function Home({ tasks }) {
                 setNewTaskCompleted(false);
             },
         });
+    }
+
+    function handleCheck(e, task) {
+        e.preventDefault();
+
+        router.put(
+            `/tasks/${task.id}`,
+            {
+                title: task.title,
+                is_completed: e.target.checked ? 1 : 0,
+            },
+            { preserveState: true }
+        );
     }
 
     function handleDelete(id) {
@@ -137,13 +150,8 @@ export default function Home({ tasks }) {
                             {filteredTasks.map(task => (
                                 <div key={task.id}>
                                     <div className="flex gap-5 mb-5">
-                                        {/* Checkbox */}
-                                        <form
-                                            onSubmit={e => {
-                                                e.preventDefault();
-                                                put(route('tasks.update', task.id));
-                                            }}
-                                        >
+                                        {/* Checkbox - seulement si pas en mode édition */}
+                                        {editingTaskId !== task.id && (
                                             <input
                                                 type="checkbox"
                                                 checked={
@@ -151,16 +159,9 @@ export default function Home({ tasks }) {
                                                         ? checkboxStates[task.id]
                                                         : task.is_completed
                                                 }
-                                                onChange={e => {
-                                                    setData('title', task.title);
-                                                    setData('is_completed', e.target.checked);
-                                                    setCheckboxStates(prev => ({
-                                                        ...prev,
-                                                        [task.id]: e.target.checked,
-                                                    }));
-                                                }}
+                                                onChange={e => handleCheck(e, task)}
                                             />
-                                        </form>
+                                        )}
 
                                         {/* Task content - Modify task */}
                                         <div className="flex-1">
@@ -168,7 +169,7 @@ export default function Home({ tasks }) {
                                                 <form
                                                     onSubmit={e => {
                                                         e.preventDefault();
-                                                        put(route('tasks.update', task.id));
+                                                        put('tasks.update', task.id);
                                                     }}
                                                     className="flex gap-3"
                                                 >
