@@ -51,24 +51,6 @@ export default function Home({ tasks }) {
         }
     }
 
-    function toggleCompleted(task) {
-        put(`/tasks/${task.id}`, {
-            data: {
-                title: task.title, // garde le titre inchangé
-                is_completed: !task.is_completed, // toggle
-            },
-        });
-    }
-
-    // function handleToggleComplete(taskId, currentStatus) {
-    //     put(`/tasks/${taskId}`, {
-    //         data: {
-    //             title: tasks.find(t => t.id === taskId)?.title || '',
-    //             is_completed: !currentStatus,
-    //         },
-    //     });
-    // }
-
     // Filter tasks
     const filteredTasks = tasks.filter(task => {
         if (filter === 'active') return !task.is_completed;
