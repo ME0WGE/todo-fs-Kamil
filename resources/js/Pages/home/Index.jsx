@@ -7,7 +7,6 @@ export default function Home({ tasks }) {
     const [editTitle, setEditTitle] = useState('');
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [newTaskCompleted, setNewTaskCompleted] = useState(false);
-    const [checkboxStates, setCheckboxStates] = useState({});
 
     const {
         data,
@@ -150,20 +149,16 @@ export default function Home({ tasks }) {
                             {filteredTasks.map(task => (
                                 <div key={task.id}>
                                     <div className="flex gap-5 mb-5">
-                                        {/* Checkbox - seulement si pas en mode édition */}
+                                        {/* Checkbox - !editMode */}
                                         {editingTaskId !== task.id && (
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    checkboxStates[task.id] !== undefined
-                                                        ? checkboxStates[task.id]
-                                                        : task.is_completed
-                                                }
+                                                checked={task.is_completed}
                                                 onChange={e => handleCheck(e, task)}
                                             />
                                         )}
 
-                                        {/* Task content - Modify task */}
+                                        {/* Task content - Edit task */}
                                         <div className="flex-1">
                                             {editingTaskId === task.id ? (
                                                 <form
@@ -208,7 +203,7 @@ export default function Home({ tasks }) {
                                             )}
                                         </div>
 
-                                        {/* Modify / Delete */}
+                                        {/* Edit / Delete */}
                                         {editingTaskId !== task.id && (
                                             <div className="flex gap-3">
                                                 <button
