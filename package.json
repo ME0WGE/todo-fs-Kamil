@@ -15,6 +15,7 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^7.0.1",
         "@inertiajs/react": "^2.1.5",
         "@vitejs/plugin-react": "^5.0.2",
         "react-dom": "^19.1.1"
