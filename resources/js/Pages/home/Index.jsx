@@ -96,10 +96,10 @@ export default function Home({ tasks }) {
                 <div className="w-full max-w-2xl mx-auto px-4 py-12">
                     {/* Title */}
                     <div className="text-center mb-8">
-                        <h1 className="text-5xl md:text-6xl font-light tracking-wide text-rose-200">
+                        <h1 className="text-5xl md:text-6xl font-light tracking-wide text-rose-600 dark:text-rose-200">
                             Full-Stack Todo List
                         </h1>
-                        <span className="text-xl md:text-xl font-light tracking-wide text-rose-200">
+                        <span className="text-xl md:text-xl font-light tracking-wide text-rose-500 dark:text-rose-200">
                             Yeah, it works.
                         </span>
                     </div>
@@ -125,7 +125,7 @@ export default function Home({ tasks }) {
                                 Add task
                             </button>
                         </div>
-                        <div className="mt-3 flex items-center justify-center gap-3 text-sm text-gray-300">
+                        <div className="mt-3 flex items-center justify-center gap-3 text-sm text-gray-600 dark:text-gray-300">
                             <label className="inline-flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="checkbox"
@@ -141,16 +141,13 @@ export default function Home({ tasks }) {
                         </div>
                     </form>
 
-                    {/* Timestamp */}
-                    <div className="text-center mb-6">
-                        <p className="text-gray-400">{new Date().toLocaleString('en-US')}</p>
-                    </div>
-
                     {/* Filters - minimal */}
                     <div className="mb-6 flex items-center justify-center gap-2 text-sm">
                         <button
                             className={`px-3 py-1.5 rounded-full cursor-pointer ${
-                                filter === 'all' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                                filter === 'all'
+                                    ? 'bg-gray-900 text-white dark:bg-white/10 dark:text-white'
+                                    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
                             }`}
                             onClick={() => setFilter('all')}
                         >
@@ -158,7 +155,9 @@ export default function Home({ tasks }) {
                         </button>
                         <button
                             className={`px-3 py-1.5 rounded-full cursor-pointer ${
-                                filter === 'active' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                                filter === 'active'
+                                    ? 'bg-gray-900 text-white dark:bg-white/10 dark:text-white'
+                                    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
                             }`}
                             onClick={() => setFilter('active')}
                         >
@@ -166,7 +165,9 @@ export default function Home({ tasks }) {
                         </button>
                         <button
                             className={`px-3 py-1.5 rounded-full cursor-pointer ${
-                                filter === 'completed' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                                filter === 'completed'
+                                    ? 'bg-gray-900 text-white dark:bg-white/10 dark:text-white'
+                                    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
                             }`}
                             onClick={() => setFilter('completed')}
                         >
@@ -174,7 +175,7 @@ export default function Home({ tasks }) {
                         </button>
                         {tasks.length - activeTasksCount > 0 && (
                             <button
-                                className="px-3 py-1.5 rounded-full text-gray-400 hover:text-white cursor-pointer"
+                                className="px-3 py-1.5 rounded-full text-gray-600 hover:text-gray-900 cursor-pointer dark:text-gray-400 dark:hover:text-white"
                                 onClick={() => destroy('/tasks/all')}
                             >
                                 <i className="fas fa-trash mr-2 "></i>Clear completed
@@ -192,7 +193,7 @@ export default function Home({ tasks }) {
                                     key={task.id}
                                     className="flex items-center justify-between bg-white border border-gray-200 rounded-2xl px-4 py-3 dark:bg-white/5 dark:border-white/10"
                                 >
-                                    {/* Left: check + title or edit input */}
+                                    {/* check + title - edit input */}
                                     <div className="flex items-center gap-3 flex-1">
                                         {editingTaskId !== task.id && (
                                             <input
@@ -240,13 +241,13 @@ export default function Home({ tasks }) {
                                             </form>
                                         ) : (
                                             <div
-                                                className={`truncate text-gray-900 dark:text-white ${
+                                                className={`truncate text-black dark:text-white ${
                                                     task.is_completed
                                                         ? 'line-through text-gray-500 dark:text-gray-400'
                                                         : ''
                                                 }`}
                                             >
-                                                {task.title}
+                                                <p className='truncate text-black dark:text-white'>{task.title}</p>
                                             </div>
                                         )}
                                     </div>

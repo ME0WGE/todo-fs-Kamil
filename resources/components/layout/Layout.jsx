@@ -14,7 +14,9 @@ export default function Layout({ children }) {
             <div className={darkMode ? 'dark' : ''}>
                 <div
                     className={`min-h-screen transition-colors duration-300 ${
-                        darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+                        darkMode
+                            ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white'
+                            : 'bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900'
                     }`}
                 >
                     <Nav darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
