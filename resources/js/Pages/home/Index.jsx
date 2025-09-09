@@ -43,7 +43,7 @@ export default function Home({ tasks }) {
             put(`/tasks/${taskId}`, {
                 data: {
                     title: editTitle.trim(),
-                    is_completed: tasks.find(t => t.id === taskId)?.is_completed || false,
+                    // is_completed: tasks.find(t => t.id === taskId)?.is_completed || false,
                 },
             });
             setEditingTaskId(null);
@@ -81,7 +81,7 @@ export default function Home({ tasks }) {
                             type="text"
                             placeholder="Titre de la tâche..."
                             name="title"
-                            value={data.title}
+                            // value={data.title}
                             onChange={e => setData('title', e.target.value)}
                         />
                     </div>
@@ -116,13 +116,6 @@ export default function Home({ tasks }) {
                                     ? 'Aucune tâche active'
                                     : 'Aucune tâche terminée'}
                             </p>
-                            <p>
-                                {filter === 'all'
-                                    ? 'Ajoutez votre première tâche !'
-                                    : filter === 'active'
-                                    ? 'Toutes vos tâches sont terminées !'
-                                    : "Aucune tâche n'a été terminée."}
-                            </p>
                         </div>
                     ) : (
                         <div className="flex flex-col">
@@ -134,7 +127,7 @@ export default function Home({ tasks }) {
                                             <input type="checkbox" checked={task.is_completed} />
                                         </button>
 
-                                        {/* Task content */}
+                                        {/* Task content - Modify task */}
                                         <div className="flex-1">
                                             {editingTaskId === task.id ? (
                                                 <form
@@ -147,8 +140,8 @@ export default function Home({ tasks }) {
                                                     <input
                                                         type="text"
                                                         placeholder="Editer la tâche..."
-                                                        value={data.title}
-                                                        onChange={e => setData('title',e.target.value)}
+                                                        // value={data.title}
+                                                        onChange={e => setData('title', e.target.value)}
                                                         onKeyDown={e => e.key === 'Enter' && handleEditSave(task.id)}
                                                         autoFocus
                                                     />

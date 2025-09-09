@@ -23,7 +23,7 @@ class TaskController extends Controller
             'is_completed' => false,
         ]);
 
-        return Inertia::render('home/Index');
+        return;
     }
     public function show() {}
     public function edit($id) {
