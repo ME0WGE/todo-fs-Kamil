@@ -10,16 +10,18 @@ export default function Layout({ children }) {
     }
 
     return (
-        <div className={darkMode ? 'dark' : ''}>
-            <div
-                className={`min-h-screen transition-colors duration-300 ${
-                    darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
-                }`}
-            >
-                <Nav darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
-                <main className="flex justify-center">{children}</main>
-                <Footer />
+        <>
+            <div className={darkMode ? 'dark' : ''}>
+                <div
+                    className={`min-h-screen transition-colors duration-300 ${
+                        darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+                    }`}
+                >
+                    <Nav darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+                    <main className="flex justify-center">{children}</main>
+                    <Footer />
+                </div>
             </div>
-        </div>
+        </>
     );
 }
