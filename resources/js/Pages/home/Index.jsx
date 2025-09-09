@@ -5,6 +5,7 @@ export default function Home({ tasks }) {
     const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editTitle, setEditTitle] = useState('');
+    const [editState, setEditState] = useState(false);
 
     const {
         data,
@@ -43,7 +44,7 @@ export default function Home({ tasks }) {
             put(`/tasks/${taskId}`, {
                 data: {
                     title: editTitle.trim(),
-                    // is_completed: tasks.find(t => t.id === taskId)?.is_completed || false,
+                    is_completed: tasks.find(t => t.id === taskId)?.is_completed || false,
                 },
             });
             setEditingTaskId(null);
@@ -123,9 +124,18 @@ export default function Home({ tasks }) {
                                 <div key={task.id}>
                                     <div className="flex gap-5 mb-5">
                                         {/* Checkbox */}
-                                        <button onClick={() => handleToggleComplete(task.id, task.is_completed)}>
-                                            <input type="checkbox" checked={task.is_completed} />
-                                        </button>
+                                        <form
+                                            onSubmit={e => {
+                                                e.preventDefault();
+                                                put(route('tasks.update', task.id));
+                                            }}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                // checked={task.id.is_completed}
+                                                onChange={e => setData('is_completed', e.target.checked)}
+                                            />
+                                        </form>
 
                                         {/* Task content - Modify task */}
                                         <div className="flex-1">

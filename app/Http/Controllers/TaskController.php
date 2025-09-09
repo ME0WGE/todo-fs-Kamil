@@ -16,6 +16,7 @@ class TaskController extends Controller
     public function store(Request $request) {
         $request->validate([
             'title' => "required|string",
+            'is_completed' => "sometimes|boolean",
         ]);
 
         Task::create([
@@ -40,7 +41,7 @@ class TaskController extends Controller
 
         $task->update([
             'title' => $request->title,
-            'is_completed' => $request->is_completed ?? $task->is_completed,
+            'is_completed' => $request->is_completed,
         ]);
 
         return;
