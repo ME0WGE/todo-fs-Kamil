@@ -106,7 +106,7 @@ export default function Home({ tasks }) {
 
                     {/* Add task */}
                     <form onSubmit={handleSubmit} className="mb-6">
-                        <div className="flex gap-3">
+                        <div className="flex gap-3 flex-col md:flex-row">
                             <input
                                 type="text"
                                 placeholder="Add a task..."
@@ -125,7 +125,7 @@ export default function Home({ tasks }) {
                                 Add task
                             </button>
                         </div>
-                        <div className="mt-3 flex items-center justify-center gap-3 text-sm text-gray-800 dark:text-gray-300">
+                        <div className="mt-3 flex items-center justify-center gap-3 text-xl md:text-sm text-gray-800 dark:text-gray-300">
                             <label className="inline-flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="checkbox"
