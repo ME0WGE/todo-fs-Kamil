@@ -96,10 +96,10 @@ export default function Home({ tasks }) {
                 <div className="w-full max-w-2xl mx-auto px-4 py-12">
                     {/* Title */}
                     <div className="text-center mb-8">
-                        <h1 className="text-5xl md:text-6xl font-light tracking-wide text-rose-600 dark:text-rose-200">
+                        <h1 className="text-5xl md:text-6xl font-light tracking-wide text-rose-800 dark:text-rose-200">
                             Full-Stack Todo List
                         </h1>
-                        <span className="text-xl md:text-xl font-light tracking-wide text-rose-500 dark:text-rose-200">
+                        <span className="text-xl md:text-xl font-light tracking-wide text-rose-700 dark:text-white">
                             Yeah, it works.
                         </span>
                     </div>
@@ -116,16 +116,16 @@ export default function Home({ tasks }) {
                                     setData('title', e.target.value);
                                     setNewTaskTitle(e.target.value);
                                 }}
-                                className="flex-1 px-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 dark:bg-black/40 dark:border-white/10 dark:text-white dark:placeholder-gray-400"
+                                className="flex-1 px-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-white border border-gray-500 text-gray-900 placeholder-gray-700 dark:bg-black/40 dark:border-white/20 dark:text-white dark:placeholder-gray-300"
                             />
                             <button
                                 type="submit"
-                                className="px-6 py-4 bg-rose-200 hover:bg-rose-300 text-gray-900 rounded-2xl transition-colors cursor-pointer"
+                                className="px-6 py-4 bg-rose-300 hover:bg-rose-400 text-gray-900 rounded-2xl transition-colors cursor-pointer"
                             >
                                 Add task
                             </button>
                         </div>
-                        <div className="mt-3 flex items-center justify-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+                        <div className="mt-3 flex items-center justify-center gap-3 text-sm text-gray-800 dark:text-gray-300">
                             <label className="inline-flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="checkbox"
@@ -146,8 +146,8 @@ export default function Home({ tasks }) {
                         <button
                             className={`px-3 py-1.5 rounded-full cursor-pointer ${
                                 filter === 'all'
-                                    ? 'bg-gray-900 text-white dark:bg-white/10 dark:text-white'
-                                    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                                    ? 'bg-gray-800 text-white dark:bg-white/20 dark:text-white'
+                                    : 'text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
                             }`}
                             onClick={() => setFilter('all')}
                         >
@@ -156,8 +156,8 @@ export default function Home({ tasks }) {
                         <button
                             className={`px-3 py-1.5 rounded-full cursor-pointer ${
                                 filter === 'active'
-                                    ? 'bg-gray-900 text-white dark:bg-white/10 dark:text-white'
-                                    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                                    ? 'bg-gray-800 text-white dark:bg-white/20 dark:text-white'
+                                    : 'text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
                             }`}
                             onClick={() => setFilter('active')}
                         >
@@ -166,8 +166,8 @@ export default function Home({ tasks }) {
                         <button
                             className={`px-3 py-1.5 rounded-full cursor-pointer ${
                                 filter === 'completed'
-                                    ? 'bg-gray-900 text-white dark:bg-white/10 dark:text-white'
-                                    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                                    ? 'bg-gray-800 text-white dark:bg-white/20 dark:text-white'
+                                    : 'text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
                             }`}
                             onClick={() => setFilter('completed')}
                         >
@@ -175,7 +175,7 @@ export default function Home({ tasks }) {
                         </button>
                         {tasks.length - activeTasksCount > 0 && (
                             <button
-                                className="px-3 py-1.5 rounded-full text-gray-600 hover:text-gray-900 cursor-pointer dark:text-gray-400 dark:hover:text-white"
+                                className="px-3 py-1.5 rounded-full text-gray-800 hover:text-gray-900 cursor-pointer dark:text-gray-300 dark:hover:text-white"
                                 onClick={() => destroy('/tasks/all')}
                             >
                                 <i className="fas fa-trash mr-2 "></i>Clear completed
@@ -186,12 +186,12 @@ export default function Home({ tasks }) {
                     {/* Tasks */}
                     <div className="space-y-3">
                         {filteredTasks.length === 0 ? (
-                            <div className="text-center text-gray-500 dark:text-gray-400 py-12">No tasks yet.</div>
+                            <div className="text-center text-gray-800 dark:text-gray-300 py-12">No tasks yet.</div>
                         ) : (
                             filteredTasks.map(task => (
                                 <div
                                     key={task.id}
-                                    className="flex items-center justify-between bg-white border border-gray-200 rounded-2xl px-4 py-3 dark:bg-white/5 dark:border-white/10"
+                                    className="flex items-center justify-between bg-white border border-gray-400 rounded-2xl px-4 py-3 dark:bg-white/10 dark:border-white/20"
                                 >
                                     {/* check + title - edit input */}
                                     <div className="flex items-center gap-3 flex-1">
@@ -200,7 +200,7 @@ export default function Home({ tasks }) {
                                                 type="checkbox"
                                                 checked={task.is_completed}
                                                 onChange={e => handleCheck(e, task)}
-                                                className="w-6 h-6 rounded-full accent-rose-400 bg-white border-gray-300 dark:bg-black/40 dark:border-white/20"
+                                                className="w-6 h-6 rounded-full accent-rose-400 bg-white border-gray-500 dark:bg-black/40 dark:border-white/30"
                                             />
                                         )}
 
@@ -222,7 +222,7 @@ export default function Home({ tasks }) {
                                                     }}
                                                     onKeyDown={e => e.key === 'Enter' && handleEditSave(task.id)}
                                                     autoFocus
-                                                    className="flex-1 bg-black/30 border border-white/10 rounded-xl px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                                                    className="flex-1 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-300 bg-white border border-gray-500 text-gray-900 placeholder-gray-700 dark:bg-black/30 dark:border-white/20 dark:text-white dark:placeholder-gray-300"
                                                 />
                                                 <button
                                                     type="button"
@@ -240,15 +240,15 @@ export default function Home({ tasks }) {
                                                 </button>
                                             </form>
                                         ) : (
-                                            <div
-                                                className={`truncate text-black dark:text-white ${
+                                            <p
+                                                className={`truncate text-gray-900 dark:text-white ${
                                                     task.is_completed
-                                                        ? 'line-through text-gray-500 dark:text-gray-400'
+                                                        ? 'line-through text-gray-700 dark:text-gray-400'
                                                         : ''
                                                 }`}
                                             >
-                                                <p className='truncate text-black dark:text-white'>{task.title}</p>
-                                            </div>
+                                                {task.title}
+                                            </p>
                                         )}
                                     </div>
 
