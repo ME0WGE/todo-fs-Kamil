@@ -5,7 +5,6 @@ export default function Home({ tasks }) {
     const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editTitle, setEditTitle] = useState('');
-    const [editState, setEditState] = useState(false);
 
     const {
         data,
@@ -52,14 +51,23 @@ export default function Home({ tasks }) {
         }
     }
 
-    function handleToggleComplete(taskId, currentStatus) {
-        put(`/tasks/${taskId}`, {
+    function toggleCompleted(task) {
+        put(`/tasks/${task.id}`, {
             data: {
-                title: tasks.find(t => t.id === taskId)?.title || '',
-                is_completed: !currentStatus,
+                title: task.title, // garde le titre inchangé
+                is_completed: !task.is_completed, // toggle
             },
         });
     }
+
+    // function handleToggleComplete(taskId, currentStatus) {
+    //     put(`/tasks/${taskId}`, {
+    //         data: {
+    //             title: tasks.find(t => t.id === taskId)?.title || '',
+    //             is_completed: !currentStatus,
+    //         },
+    //     });
+    // }
 
     // Filter tasks
     const filteredTasks = tasks.filter(task => {
